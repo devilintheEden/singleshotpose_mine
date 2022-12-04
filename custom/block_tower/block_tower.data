@@ -1,0 +1,15 @@
+train  = custom/block_tower/train.txt
+valid  = custom/block_tower/test.txt
+backup = backup/block_tower
+mesh = custom/block_tower/block_tower.ply
+tr_range = custom/block_tower/training_range.txt
+name = block_tower
+gpus = 0
+diam = 0.08
+diam_real = 0.00937
+width = 640
+height = 480
+fx = 640
+fy = 658.8
+u0 = 320
+v0 = 240

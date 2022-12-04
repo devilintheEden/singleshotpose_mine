@@ -1,0 +1,15 @@
+train  = custom/block_A/train.txt
+valid  = custom/block_A/test.txt
+backup = backup/block_A
+mesh = custom/block_A/block_A.ply
+tr_range = custom/block_A/training_range.txt
+name = block_A
+gpus = 0
+diam = 0.05
+diam_real = 0.548598
+width = 640
+height = 480
+fx = 640
+fy = 658.8
+u0 = 320
+v0 = 240
