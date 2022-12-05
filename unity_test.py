@@ -6,18 +6,16 @@ from torchvision import datasets, transforms
 import scipy.io
 import warnings
 warnings.filterwarnings("ignore")
-import matplotlib.pyplot as plt
 import scipy.misc
-from PIL import Image
+#from PIL import Image
 
 from darknet import Darknet
 import dataset
 from utils import *
 from MeshPly import MeshPly
 
-main_path = ".\\custom"
+main_path = "./custom"
 model_name = ["block_tower", "block_A", "block_B", "block_C", "block_D", "block_E"]
-#model_name = ["block_tower"]
 edges_corners = [[0, 1], [0, 2], [0, 4], [1, 3], [1, 5], [2, 3], [2, 6], [3, 7], [4, 5], [4, 6], [5, 7], [6, 7]]
 intrinsic_calibration = get_camera_intrinsic(320, 240, 640, 658.8)
 im_width     = 640
@@ -104,18 +102,20 @@ if __name__ == '__main__':
                 all_2d_position_points.append(proj_corners_pr)
 
 
-    img = Image.open(main_path + "\\save.jpg", mode='r', formats=None)
+    #img = Image.open(os.path.join(main_path, "save.jpg"), mode='r', formats=None)
     result_string = ""
+    '''
     plt.xlim((0, im_width))
     plt.ylim((0, im_height))
-    plt.imshow(scipy.misc.imresize(img, (im_height, im_width)))
+    plt.imshow(scipy.misc.imresize(img, (im_height, im_width)))'''
     for i in range(6):
         result_string += np.array2string(all_3d_position_points[i], formatter={'float_kind':lambda x: "%.5f" % x}) + "\n"
-        for edge in edges_corners:
+        '''for edge in edges_corners:
             #plt.plot([corners2D_pr[edge[0] + 1][0], corners2D_pr[edge[1] + 1][0]], [corners2D_pr[edge[0] + 1][1], corners2D_pr[edge[1] + 1][1]], color='g', linewidth=2.0)
             plt.plot(all_2d_position_points[i][edge, 0], 480-all_2d_position_points[i][edge, 1], color=colors[i], linewidth=3.0)
-    plt.gca().invert_yaxis()
-    plt.savefig(main_path + "\\result.jpg", dpi=150)
+            '''
+    #plt.gca().invert_yaxis()
+    #plt.savefig(main_path + "\\result.jpg", dpi=150)'''
     result_text = open(main_path + "\\result.txt","w")
     result_text.write(result_string)
     result_text.close()
