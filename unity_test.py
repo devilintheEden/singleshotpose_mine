@@ -116,6 +116,6 @@ if __name__ == '__main__':
             '''
     #plt.gca().invert_yaxis()
     #plt.savefig(main_path + "\\result.jpg", dpi=150)'''
-    result_text = open(main_path + "\\result.txt","w")
+    result_text = open(os.path.join(main_path, "result.txt"),"w")
     result_text.write(result_string)
     result_text.close()

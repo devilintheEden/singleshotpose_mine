@@ -137,7 +137,7 @@ def define_current_puzzle_status(fixed_puzzle_platforms, moving_blocks_list):
     for i in range(7):
         for j in range(7):
             if(len(grid_map[i][j]) == 0 and not(i == 0 and j == 0) and not(i == 0 and j == 6)):
-                current_puzzle_platforms.append(Platform(False, (i,j), 1))
+                current_puzzle_platforms.append(Platform(False, (i,j), 0))
                 grid_map[i][j].append(len(current_puzzle_platforms) - 1)
     return grid_map, current_puzzle_platforms
 
@@ -191,30 +191,30 @@ start_point_index = 6
 finish_point_index = 1
 
 if __name__ == "__main__":
-    temp = ['puzzle_solver.py', '1', '3', 's', '3', '2', 'w', '-6', '5', 'e', '2', '1', 'n', '-4', '13', 'e', '4', '12', 's']
     blocks_in_order = [block_A, block_B, block_C, block_D, block_E]
     file_path = "puzzle_result.txt"
     fixed_puzzle_platforms = []
-    #parameters = sys.argv[1:]
-    parameters = temp[1:]
+    parameters = sys.argv[1:]
     movable_blocks = []
     for i in range(6):
         y = int(parameters[3 * i])
         x = int(parameters[3 * i + 1])
         if(x >= 0 and x <= 6 and y >= 0 and y <= 6):
-            if(i == 0):
+            if(i == 5):
                 fixed_puzzle_platforms = place_block_tower((x,y), parameters[3 * i + 2])
             else:
-                movable_blocks.append([blocks_in_order[i - 1], (x,y), parameters[3 * i + 2]])
+                movable_blocks.append([blocks_in_order[i], (x,y), parameters[3 * i + 2]])
     grid_map, current_puzzle_platforms = define_current_puzzle_status(fixed_puzzle_platforms, movable_blocks)
-    print(current_puzzle_platforms)
     G = get_current_network(grid_map, current_puzzle_platforms)
-    if(nx.has_path(G, start_point_index, finish_point_index)):
-        temp = nx.shortest_path(G, source=start_point_index, target=finish_point_index)
-        result = ""
-        for i in temp:
-            result += str(current_puzzle_platforms[i].position[0]) + " " + str(current_puzzle_platforms[i].position[1]) + " " + str(current_puzzle_platforms[i].level) + " "
-        result = result[:-1]
-        write_Txt_File(file_path, result)
-    else:
+    try:
+        if(nx.has_path(G, start_point_index, finish_point_index)):
+            temp = nx.shortest_path(G, source=start_point_index, target=finish_point_index)
+            result = ""
+            for i in temp:
+                result += str(current_puzzle_platforms[i].position[0]) + " " + str(current_puzzle_platforms[i].position[1]) + " " + str(current_puzzle_platforms[i].level) + " "
+            result = result[:-1]
+            write_Txt_File(file_path, result)
+        else:
+            write_Txt_File(file_path, "false")
+    except nx.NodeNotFound:
         write_Txt_File(file_path, "false")
